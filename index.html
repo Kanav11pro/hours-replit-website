@@ -1,1497 +1,792 @@
 
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-  <title>Study Master Pro - Advanced Study Companion</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+  <title>Study Master - Weekly Challenge</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
 
   <style>
-    :root {
-      --primary: #6366f1;
-      --secondary: #8b5cf6;
-      --accent: #10b981;
-      --danger: #ef4444;
-      --warning: #f59e0b;
-      --success: #22c55e;
-      --bg-primary: #0f0f23;
-      --bg-secondary: #1a1a2e;
-      --bg-tertiary: #16213e;
-      --text-primary: #ffffff;
-      --text-secondary: #94a3b8;
-      --glass-bg: rgba(255, 255, 255, 0.1);
-      --glass-border: rgba(255, 255, 255, 0.2);
-      --shadow-light: 0 8px 32px rgba(0, 0, 0, 0.3);
-      --shadow-heavy: 0 20px 60px rgba(0, 0, 0, 0.4);
-      --border-radius: 16px;
-      --animation-speed: 0.3s;
-    }
+.btn-secondary {
+  background: var(--accent-color);
+  color: #fff;
+  border: none;
+  padding: 0.6rem 1.2rem;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.3s, transform 0.2s;
+  margin: 0 0.5rem;
+}
+.btn-secondary:hover { background: #059669; transform: translateY(-2px); }
 
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
 
-    body {
-      font-family: 'Inter', sans-serif;
-      background: linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-secondary) 50%, var(--bg-tertiary) 100%);
-      color: var(--text-primary);
-      min-height: 100vh;
-      overflow-x: hidden;
-      position: relative;
-    }
-
-    /* Animated Background */
-    body::before {
-      content: '';
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: radial-gradient(circle at 20% 30%, rgba(99, 102, 241, 0.3) 0%, transparent 50%),
-                  radial-gradient(circle at 80% 70%, rgba(139, 92, 246, 0.3) 0%, transparent 50%),
-                  radial-gradient(circle at 40% 80%, rgba(16, 185, 129, 0.2) 0%, transparent 50%);
-      animation: backgroundMove 20s ease-in-out infinite;
-      z-index: -1;
-    }
-
-    @keyframes backgroundMove {
-      0%, 100% { transform: translate(0, 0) rotate(0deg); }
-      33% { transform: translate(-20px, -20px) rotate(1deg); }
-      66% { transform: translate(20px, -10px) rotate(-1deg); }
-    }
-
-    .container {
-      max-width: 1400px;
-      margin: 0 auto;
-      padding: 1rem;
-    }
-
-    /* Header */
+  /* Header */
     header {
       text-align: center;
-      padding: 2rem;
-      background: var(--glass-bg);
-      backdrop-filter: blur(20px);
-      border: 1px solid var(--glass-border);
-      border-radius: var(--border-radius);
-      margin-bottom: 2rem;
+      padding: 1.5rem 1rem;
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      margin-bottom: 1.5rem;
+      border-radius: 0 0 20px 20px;
       position: relative;
       overflow: hidden;
-      animation: slideInDown 0.8s ease-out;
     }
-
-    header::before {
-      content: '';
-      position: absolute;
-      top: -50%;
-      left: -50%;
-      width: 200%;
-      height: 200%;
-      background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
-      animation: shimmer 3s infinite;
-      z-index: -1;
-    }
-
-    @keyframes shimmer {
-      0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
-      100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
-    }
-
     header h1 {
-      font-size: 3rem;
-      font-weight: 700;
-      background: linear-gradient(135deg, var(--primary), var(--secondary));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
+      font-size: 2.5rem;
       margin-bottom: 0.5rem;
-      animation: glow 2s ease-in-out infinite alternate;
+      color: #fff;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+      animation: slideDown var(--animation-speed) ease-out both;
     }
-
-    @keyframes glow {
-      from { filter: drop-shadow(0 0 20px rgba(99, 102, 241, 0.5)); }
-      to { filter: drop-shadow(0 0 30px rgba(139, 92, 246, 0.8)); }
-    }
-
     header p {
-      font-size: 1.2rem;
-      color: var(--text-secondary);
-      margin-bottom: 1rem;
+      font-size: 1rem;
+      color: rgba(255,255,255,0.9);
+      max-width: 90%;
+      margin: 0 auto;
+      animation: fadeIn 1s ease 0.8s forwards;
+    }
+    header nav {
+      margin-top: 1rem;
+    }
+    header nav a {
+      color: #fff;
+      text-decoration: none;
+      font-weight: 600;
+      margin: 0 0.5rem;
+      transition: color var(--transition-speed);
+    }
+    header nav a:hover {
+      color: var(--accent-color);
     }
 
-    /* Navigation */
-    nav {
-      display: flex;
-      justify-content: center;
-      gap: 1rem;
+
+
+
+
+    
+  
+  .previous-weeks-scroll {
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+    /* Added new styles for improvements */
+    .motivation-message {
+      background: linear-gradient(135deg, #6366f1, #8b5cf6);
+      color: white;
+      padding: 1rem;
+      border-radius: 10px;
+      margin: 1rem 0;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    }
+    
+    .previous-weeks-container {
+      max-height: 200px;
+      overflow-y: auto;
       margin-top: 1rem;
     }
 
-    nav a {
-      color: var(--text-primary);
-      text-decoration: none;
-      padding: 0.5rem 1rem;
-      border-radius: 8px;
-      background: var(--glass-bg);
-      border: 1px solid var(--glass-border);
-      transition: all var(--animation-speed);
-      font-weight: 500;
-    }
-
-    nav a:hover {
-      background: var(--primary);
-      transform: translateY(-2px);
-      box-shadow: var(--shadow-light);
-    }
-
-    /* Main Grid */
-    main {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-      gap: 1.5rem;
-      animation: fadeInUp 1s ease-out 0.3s both;
-    }
-
-    /* Glass Card Effect */
-    .card {
-      background: var(--glass-bg);
-      backdrop-filter: blur(20px);
-      border: 1px solid var(--glass-border);
-      border-radius: var(--border-radius);
-      padding: 1.5rem;
-      box-shadow: var(--shadow-light);
-      transition: all var(--animation-speed);
-      position: relative;
-      overflow: hidden;
-    }
-
-    .card:hover {
-      transform: translateY(-8px);
-      box-shadow: var(--shadow-heavy);
-      border-color: var(--primary);
-    }
-
-    .card::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: -100%;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
-      transition: left 0.5s;
-    }
-
-    .card:hover::before {
-      left: 100%;
-    }
-
-    h2 {
-      font-size: 1.5rem;
-      font-weight: 600;
-      margin-bottom: 1rem;
-      color: var(--text-primary);
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-    }
-
-    /* Progress Bar */
-    .progress-container {
-      position: relative;
-      margin: 1rem 0;
-    }
-
-    .progress-bar-container {
-      width: 100%;
-      height: 12px;
-      background: var(--bg-secondary);
-      border-radius: 6px;
-      overflow: hidden;
-      position: relative;
-    }
-
-    .progress-bar-fill {
-      height: 100%;
-      background: linear-gradient(90deg, var(--primary), var(--secondary));
-      border-radius: 6px;
-      transition: width 1.5s cubic-bezier(0.4, 0, 0.2, 1);
-      position: relative;
-      overflow: hidden;
-    }
-
-    .progress-bar-fill::after {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: -100%;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
-      animation: progressShine 2s infinite;
-    }
-
-    @keyframes progressShine {
-      0% { left: -100%; }
-      100% { left: 100%; }
-    }
-
-    .progress-text {
+    .daily-avg-message {
       text-align: center;
-      margin-top: 0.5rem;
+      padding: 0.8rem;
+      background: rgba(255,255,255,0.2);
+      border-radius: 8px;
+      margin: 1rem 0;
       font-weight: 600;
-      color: var(--primary);
     }
+    
+    :root {
+      --primary-color: #6366f1;
+      --secondary-color: #8b5cf6;
+      --accent-color: #10b981;
+      --danger-color: #ef4444;
+      --bg-gradient: linear-gradient(135deg, #1e3c72, #2a5298);
+      --card-bg: rgba(255,255,255,0.9);
+      --shadow-color: rgba(0,0,0,0.1);
+      --text-color: #1a202c;
+      --small-text: 0.9rem;
+    }
+    * { margin:0; padding:0; box-sizing:border-box; font-family:'Poppins',sans-serif; }
+    body {
+      background: var(--bg-gradient);
+      color: var(--text-color);
+      font-size: var(--small-text);
+      line-height:1.6;
+      padding:1rem;
+      min-height:100vh;
+    }
+    .container { max-width:1200px; margin:0 auto; }
+
+    header {
+      text-align:center; padding:1.5rem 1rem;
+      background:rgba(255,255,255,0.1); backdrop-filter:blur(10px);
+      border-radius:0 0 20px 20px; margin-bottom:1.5rem;
+      animation:slideDown 0.6s ease-out both;
+    }
+    header h1 { font-size:2.5rem; color:#fff; text-shadow:0 2px 4px rgba(0,0,0,0.2); }
+    header p  { font-size:1rem; color:rgba(255,255,255,0.9); }
+
+    main {
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+      gap:1.5rem;
+    }
+    .card {
+      background:var(--card-bg);
+      padding:1.5rem;
+      border-radius:15px;
+      box-shadow:0 6px 20px var(--shadow-color);
+      backdrop-filter:blur(10px);
+      transition:transform 0.3s;
+      animation:fadeInUp 0.6s ease both;
+    }
+    .card:hover { transform:translateY(-5px); }
+    h2 { text-align:center; color:var(--primary-color); margin-bottom:1rem; }
+
+    /* Progress */
+    .progress-bar-container {
+      width:100%; background:#e2e8f0; border-radius:25px; height:20px; overflow:hidden;
+    }
+    .progress-bar-fill {
+      height:100%; width:0; background:var(--primary-color); transition:width 1s ease-out;
+    }
+    .progress-bar-text {
+      text-align:center; margin-top:0.5rem; font-weight:bold; color:var(--primary-color);
+    }
+
+    /* Countdown & Motivation */
+    .countdown { text-align:center; color:var(--accent-color); margin-top:0.5rem; }
+    .motivation-message {
+      text-align:center; padding:0.6rem; border-radius:10px; margin-top:1rem;
+      display:flex; justify-content:center; align-items:center; gap:0.5rem;
+    }
+    .success { background:#dcfce7; color:#166534; }
+    .warning { background:#fef3c7; color:#92400e; }
 
     /* Forms */
-    .form-group {
-      margin-bottom: 1rem;
+    form { display:grid; gap:1rem; }
+    .input-group { display:flex; flex-direction:column; gap:0.5rem; }
+    input[type=date], input[type=number] {
+      padding:0.6rem; border:2px solid #e2e8f0; border-radius:8px;
+      font-size:var(--small-text); transition:border-color 0.3s;
     }
-
-    label {
-      display: block;
-      margin-bottom: 0.5rem;
-      font-weight: 500;
-      color: var(--text-secondary);
+    input:disabled { background:#f0f0f0; }
+    input:focus {
+      outline:none; border-color:var(--primary-color);
+      box-shadow:0 0 0 3px rgba(99,102,241,0.3);
     }
-
-    input, select, textarea {
-      width: 100%;
-      padding: 0.75rem;
-      background: var(--bg-secondary);
-      border: 1px solid var(--glass-border);
-      border-radius: 8px;
-      color: var(--text-primary);
-      font-size: 0.9rem;
-      transition: all var(--animation-speed);
-    }
-
-    input:focus, select:focus, textarea:focus {
-      outline: none;
-      border-color: var(--primary);
-      box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
-      transform: translateY(-1px);
-    }
-
     button {
-      background: linear-gradient(135deg, var(--primary), var(--secondary));
-      color: white;
-      border: none;
-      padding: 0.75rem 1.5rem;
-      border-radius: 8px;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all var(--animation-speed);
-      position: relative;
-      overflow: hidden;
+      background:var(--primary-color); color:#fff; border:none;
+      padding:0.6rem; border-radius:8px; font-weight:600; font-size:var(--small-text);
+      cursor:pointer; transition:transform 0.2s, background 0.3s;
+    }
+    button:disabled { background:#ccc; cursor:not-allowed; }
+    button:hover:not(:disabled) { background:var(--secondary-color); transform:translateY(-2px); }
+
+    /* Table */
+    .sessions-table-wrapper { max-height:200px; overflow-y:auto; margin-top:1rem; }
+    table { width:100%; border-collapse:collapse; }
+    th,td {
+      padding:0.6rem; border-bottom:1px solid #e2e8f0; font-size:var(--small-text);
+    }
+    th { background:#f8fafc; }
+    td.editable { cursor:pointer; }
+    tr:hover { background:rgba(0,0,0,0.03); }
+    .delete-btn {
+      color:var(--danger-color); cursor:pointer; font-size:1rem; transition:color 0.2s;
+    }
+    .delete-btn:hover { color:#b91c1c; }
+
+    /* Dashboard */
+    .dashboard-header {
+      display:flex; align-items:center; justify-content:center; gap:1rem;
+      margin-bottom:1rem;
+    }
+    .dashboard-header button {
+      background:none; border:2px solid var(--primary-color);
+      color:var(--primary-color); border-radius:50%;
+      width:32px; height:32px; font-size:1.1rem;
+      line-height:0; cursor:pointer; transition:background 0.2s, color 0.2s;
+    }
+    .dashboard-header button:disabled {
+      border-color:#ccc; color:#ccc; cursor:not-allowed;
+    }
+    .dashboard-header button:hover:not(:disabled) {
+      background:var(--primary-color); color:#fff;
+    }
+    .dashboard-week-label {
+      font-size:1rem; font-weight:600;
+    }
+    .insights {
+      display:flex; flex-wrap:wrap; gap:1rem; justify-content:center;
+      margin-bottom:1rem;
+    }
+    .insight-box {
+      background:rgba(0,0,0,0.04); padding:0.8rem; border-radius:8px;
+      flex:1 1 120px; text-align:center; font-size:var(--small-text);
     }
 
-    button:hover {
-      transform: translateY(-2px);
-      box-shadow: var(--shadow-light);
-    }
+    /* Charts */
+    .chart-container { position:relative; width:100%; height:180px; margin-top:1rem; }
 
-    button:active {
-      transform: translateY(0);
-    }
-
-    button::before {
-      content: '';
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      width: 0;
-      height: 0;
-      background: rgba(255, 255, 255, 0.2);
-      border-radius: 50%;
-      transform: translate(-50%, -50%);
-      transition: width 0.3s, height 0.3s;
-    }
-
-    button:active::before {
-      width: 300px;
-      height: 300px;
-    }
-
-    /* Feature Cards */
-    .feature-card {
-      grid-column: span 1;
-    }
-
-    .feature-card.wide {
-      grid-column: span 2;
-    }
-
-    /* Timer Display */
-    .timer-display {
-      text-align: center;
-      font-size: 2rem;
-      font-weight: 700;
-      color: var(--accent);
-      margin: 1rem 0;
-      padding: 1rem;
-      background: var(--bg-secondary);
-      border-radius: 12px;
-      border: 2px solid var(--accent);
-      animation: pulse 2s infinite;
-    }
-
-    @keyframes pulse {
-      0%, 100% { transform: scale(1); }
-      50% { transform: scale(1.02); }
-    }
-
-    /* Task List */
-    .task-item {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      padding: 0.5rem;
-      background: var(--bg-secondary);
-      border-radius: 8px;
-      margin-bottom: 0.5rem;
-      transition: all var(--animation-speed);
-    }
-
-    .task-item:hover {
-      background: var(--bg-tertiary);
-      transform: translateX(5px);
-    }
-
-    .task-item.completed {
-      opacity: 0.6;
-      text-decoration: line-through;
-    }
-
-    /* Charts Container */
-    .chart-container {
-      position: relative;
-      height: 300px;
-      margin: 1rem 0;
-    }
-
-    /* Notification */
-    .notification {
-      position: fixed;
-      top: 20px;
-      right: 20px;
-      background: var(--glass-bg);
-      backdrop-filter: blur(20px);
-      border: 1px solid var(--glass-border);
-      border-radius: 12px;
-      padding: 1rem;
-      color: var(--text-primary);
-      transform: translateX(400px);
-      transition: transform 0.3s ease;
-      z-index: 1000;
-      max-width: 300px;
-    }
-
-    .notification.show {
-      transform: translateX(0);
-    }
-
-    /* Study Modes */
-    .study-mode {
-      display: flex;
-      gap: 0.5rem;
-      margin: 1rem 0;
-      flex-wrap: wrap;
-    }
-
-    .mode-btn {
-      padding: 0.5rem 1rem;
-      background: var(--bg-secondary);
-      border: 1px solid var(--glass-border);
-      border-radius: 20px;
-      cursor: pointer;
-      transition: all var(--animation-speed);
-      font-size: 0.8rem;
-    }
-
-    .mode-btn.active {
-      background: var(--primary);
-      color: white;
+    /* Previous Weeks */
+    .previous-week-card {
+      background:var(--card-bg); padding:0.8rem; border-radius:8px;
+      box-shadow:0 4px 15px var(--shadow-color); margin-top:0.8rem;
+      font-size:var(--small-text);
     }
 
     /* Animations */
-    @keyframes slideInDown {
-      from {
-        opacity: 0;
-        transform: translateY(-30px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
+    @keyframes fadeInUp { from{opacity:0;transform:translateY(20px);} to{opacity:1;transform:translateY(0);} }
+    @keyframes slideDown { from{opacity:0;transform:translateY(-30px);} to{opacity:1;transform:translateY(0);} }
 
-    @keyframes fadeInUp {
-      from {
-        opacity: 0;
-        transform: translateY(30px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
+    /* add these to your existing <style> */
+.btn {
+  background: var(--primary-color);
+  color: #fff;
+  border: none;
+  padding: 0.6rem 1.2rem;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.3s, transform 0.2s;
+  margin: 0 0.5rem;
+}
+.btn:hover { background: var(--secondary-color); transform: translateY(-2px); }
 
-    @keyframes bounceIn {
-      0% {
-        opacity: 0;
-        transform: scale(0.3);
-      }
-      50% {
-        opacity: 1;
-        transform: scale(1.05);
-      }
-      70% {
-        transform: scale(0.9);
-      }
-      100% {
-        opacity: 1;
-        transform: scale(1);
-      }
-    }
-
-    /* Responsive */
-    @media (max-width: 768px) {
-      .container {
-        padding: 0.5rem;
-      }
-      
-      main {
-        grid-template-columns: 1fr;
-      }
-      
-      .feature-card.wide {
-        grid-column: span 1;
-      }
-      
-      header h1 {
-        font-size: 2rem;
-      }
-    }
-
-    /* Additional Utility Classes */
-    .text-center { text-align: center; }
-    .mb-1 { margin-bottom: 1rem; }
-    .mt-1 { margin-top: 1rem; }
-    .flex { display: flex; }
-    .flex-between { justify-content: space-between; }
-    .flex-center { justify-content: center; align-items: center; }
-    .gap-1 { gap: 1rem; }
-
-    /* Dark scrollbar */
-    ::-webkit-scrollbar {
-      width: 8px;
-    }
-
-    ::-webkit-scrollbar-track {
-      background: var(--bg-secondary);
-    }
-
-    ::-webkit-scrollbar-thumb {
-      background: var(--primary);
-      border-radius: 4px;
-    }
-
-    ::-webkit-scrollbar-thumb:hover {
-      background: var(--secondary);
-    }
   </style>
 </head>
 <body>
+
+
+  <!-- Previous HTML structure remains same until script section -->
   <div class="container">
-    <header>
-      <h1><i class="fas fa-graduation-cap"></i> Study Master Pro</h1>
-      <p>Your Advanced Study Companion with AI-Powered Features</p>
+   <header>
+      <h1>📚 Study Master</h1>
+      <p>Welcome, User! Conquer your weekly study challenge.</p>
       <nav>
-        <a href="#"><i class="fas fa-home"></i> Dashboard</a>
-        <a href="#"><i class="fas fa-chart-line"></i> Analytics</a>
-        <a href="#"><i class="fas fa-cog"></i> Settings</a>
+        <a href='https://exam-ace.netlify.app/prepometer'>Homepage</a>
       </nav>
     </header>
-
     <main>
-      <!-- Weekly Progress -->
-      <section class="card feature-card">
-        <h2><i class="fas fa-target"></i> Weekly Progress</h2>
-        <p id="week-range" class="text-center mb-1"></p>
-        <div class="progress-container">
-          <div class="progress-bar-container">
-            <div id="progress-bar-fill" class="progress-bar-fill"></div>
-          </div>
-          <div id="progress-text" class="progress-text">0 hrs / 70 hrs</div>
-        </div>
-        <div id="countdown-timer" class="timer-display">Time left: --d --h --m --s</div>
-        <div id="motivation-message" class="text-center"></div>
-      </section>
 
-      <!-- Pomodoro Timer (NEW FEATURE 1) -->
-      <section class="card feature-card">
-        <h2><i class="fas fa-clock"></i> Pomodoro Timer</h2>
-        <div class="study-mode">
-          <div class="mode-btn active" data-mode="work" data-duration="25">Work (25m)</div>
-          <div class="mode-btn" data-mode="short" data-duration="5">Short Break (5m)</div>
-          <div class="mode-btn" data-mode="long" data-duration="15">Long Break (15m)</div>
+      <!-- Weekly Progress (always current week) -->
+      <section id="challenge-overview" class="card">
+        <h2>Weekly Progress</h2>
+        <p id="week-range"></p>
+        <div class="progress-bar-container">
+          <div id="progress-bar-fill" class="progress-bar-fill"></div>
         </div>
-        <div id="pomodoro-display" class="timer-display">25:00</div>
-        <div class="flex flex-center gap-1">
-          <button id="pomodoro-start"><i class="fas fa-play"></i> Start</button>
-          <button id="pomodoro-pause"><i class="fas fa-pause"></i> Pause</button>
-          <button id="pomodoro-reset"><i class="fas fa-redo"></i> Reset</button>
-        </div>
-        <div class="mt-1">
-          <p>Session: <span id="pomodoro-session">1</span> | Mode: <span id="current-mode">Work</span></p>
-        </div>
-      </section>
-
-      <!-- Study Goals (NEW FEATURE 2) -->
-      <section class="card feature-card">
-        <h2><i class="fas fa-bullseye"></i> Daily Study Goals</h2>
-        <div class="form-group">
-          <label for="daily-goal">Daily Goal (hours)</label>
-          <input type="number" id="daily-goal" min="1" max="24" value="2">
-        </div>
-        <div id="daily-progress" class="progress-container">
-          <div class="progress-bar-container">
-            <div id="daily-progress-fill" class="progress-bar-fill"></div>
-          </div>
-          <div id="daily-progress-text" class="progress-text">0 hrs / 2 hrs today</div>
-        </div>
-        <div class="mt-1">
-          <h3>Quick Goals</h3>
-          <div class="study-mode">
-            <div class="mode-btn" onclick="setQuickGoal(1)">1 Hour</div>
-            <div class="mode-btn" onclick="setQuickGoal(2)">2 Hours</div>
-            <div class="mode-btn" onclick="setQuickGoal(4)">4 Hours</div>
-            <div class="mode-btn" onclick="setQuickGoal(8)">8 Hours</div>
-          </div>
-        </div>
-      </section>
-
-      <!-- Task Manager (NEW FEATURE 3) -->
-      <section class="card feature-card">
-        <h2><i class="fas fa-tasks"></i> Study Tasks</h2>
-        <div class="form-group">
-          <div class="flex gap-1">
-            <input type="text" id="task-input" placeholder="Add a study task...">
-            <button onclick="addTask()"><i class="fas fa-plus"></i></button>
-          </div>
-        </div>
-        <div id="task-list"></div>
-        <div class="mt-1 text-center">
-          <p>Completed: <span id="completed-tasks">0</span> / <span id="total-tasks">0</span></p>
-        </div>
-      </section>
-
-      <!-- Subject Tracker (NEW FEATURE 4) -->
-      <section class="card feature-card">
-        <h2><i class="fas fa-book"></i> Subject Tracker</h2>
-        <div class="form-group">
-          <label for="subject-select">Subject</label>
-          <select id="subject-select">
-            <option value="Mathematics">📐 Mathematics</option>
-            <option value="Science">🔬 Science</option>
-            <option value="English">📚 English</option>
-            <option value="History">🏛️ History</option>
-            <option value="Programming">💻 Programming</option>
-            <option value="Other">📋 Other</option>
-          </select>
-        </div>
-        <div class="chart-container">
-          <canvas id="subjectChart"></canvas>
-        </div>
-      </section>
-
-      <!-- Study Streak (NEW FEATURE 5) -->
-      <section class="card feature-card">
-        <h2><i class="fas fa-fire"></i> Study Streak</h2>
-        <div class="text-center">
-          <div id="streak-count" class="timer-display">0 Days</div>
-          <p>Current Streak</p>
-          <div class="mt-1">
-            <p>Longest Streak: <span id="longest-streak">0</span> days</p>
-            <p>This Week: <span id="week-streak">0</span>/7 days</p>
-          </div>
-          <div id="streak-calendar" class="mt-1"></div>
-        </div>
+        <div id="progress-bar-text" class="progress-bar-text">0 hrs / 0 hrs</div>
+        <div class="countdown" id="countdown-timer">Time left: --d --h --m --s</div>
+        <div id="motivation-message" class="motivation-message"><span>🎯 Keep it up!</span></div>
       </section>
 
       <!-- Add Session -->
-      <section class="card feature-card">
-        <h2><i class="fas fa-plus-circle"></i> Add Study Session</h2>
+      <section id="entry-form" class="card">
+        <h2>Add Study Session</h2>
         <form id="study-form">
-          <div class="form-group">
+          <div class="input-group">
             <label for="study-date">Date</label>
             <input type="date" id="study-date" required>
           </div>
-          <div class="form-group">
-            <label for="study-subject">Subject</label>
-            <select id="study-subject">
-              <option value="Mathematics">📐 Mathematics</option>
-              <option value="Science">🔬 Science</option>
-              <option value="English">📚 English</option>
-              <option value="History">🏛️ History</option>
-              <option value="Programming">💻 Programming</option>
-              <option value="Other">📋 Other</option>
-            </select>
-          </div>
-          <div class="form-group">
+          <div class="input-group">
             <label>Duration</label>
-            <div class="flex gap-1">
-              <input type="number" id="hours" placeholder="Hours" min="0" required>
-              <input type="number" id="minutes" placeholder="Minutes" min="0" max="59">
+            <div style="display:flex;gap:0.5rem;flex-wrap:wrap;">
+              <input type="number" id="hours" placeholder="Hours" min="0" required style="flex:1">
+              <input type="number" id="minutes" placeholder="Minutes" min="0" max="59" style="flex:1">
             </div>
           </div>
-          <button type="submit"><i class="fas fa-save"></i> Add Session</button>
+          <button type="submit">➕ Add Session</button>
         </form>
       </section>
 
       <!-- Weekly Target -->
-      <section class="card feature-card">
-        <h2><i class="fas fa-crosshairs"></i> Weekly Target</h2>
+      <section id="target-update" class="card">
+        <h2>Weekly Target</h2>
         <form id="target-form">
-          <div class="form-group">
+          <div class="input-group">
             <label for="target-hours">Target Hours</label>
             <input type="number" id="target-hours" min="1" required>
           </div>
-          <button type="submit"><i class="fas fa-flag"></i> Set Target</button>
+          <button type="submit" id="target-btn">🎯 Set Target</button>
         </form>
-        <p id="discipline-message" class="mt-1"></p>
+        <p id="discipline-message" style="margin-top:0.4rem;color:#555;font-size:var(--small-text)"></p>
       </section>
 
       <!-- Sessions Table -->
-      <section class="card feature-card wide">
-        <h2><i class="fas fa-table"></i> Study Sessions</h2>
-        <div style="max-height: 300px; overflow-y: auto;">
-          <table id="entries-table" style="width: 100%; border-collapse: collapse;">
+      <section id="entries-list" class="card">
+        <h2>Study Sessions</h2>
+        <div class="sessions-table-wrapper">
+          <table id="entries-table">
             <thead>
-              <tr style="background: var(--bg-secondary);">
-                <th style="padding: 0.75rem; border-bottom: 1px solid var(--glass-border);">Date</th>
-                <th style="padding: 0.75rem; border-bottom: 1px solid var(--glass-border);">Subject</th>
-                <th style="padding: 0.75rem; border-bottom: 1px solid var(--glass-border);">Duration</th>
-                <th style="padding: 0.75rem; border-bottom: 1px solid var(--glass-border);">Action</th>
-              </tr>
+              <tr><th>Date</th><th>Duration</th><th>Action</th></tr>
             </thead>
             <tbody></tbody>
           </table>
         </div>
       </section>
 
-      <!-- Dashboard & Analytics -->
-      <section class="card feature-card wide">
-        <h2><i class="fas fa-chart-bar"></i> Analytics Dashboard</h2>
-        <div class="flex flex-between mb-1">
-          <button id="prev-week"><i class="fas fa-chevron-left"></i> Previous</button>
-          <div id="dashboard-week-label">Current Week</div>
-          <button id="next-week">Next <i class="fas fa-chevron-right"></i></button>
+      <!-- Dashboard & History -->
+      <section id="dashboard" class="card">
+        <div class="dashboard-header">
+          <button id="prev-week">◀️</button>
+          <div id="dashboard-week-label" class="dashboard-week-label">Week: --</div>
+          <button id="next-week">▶️</button>
         </div>
-        
-        <div class="flex gap-1 mb-1" style="flex-wrap: wrap;">
-          <div style="background: var(--bg-secondary); padding: 1rem; border-radius: 8px; flex: 1; min-width: 120px; text-align: center;">
+
+        <div class="insights">
+          <div class="insight-box">
             <strong>Avg hrs/day</strong>
-            <div id="avg-hours" style="font-size: 1.5rem; color: var(--primary);">0.0</div>
+            <div id="avg-hours">0.0</div>
           </div>
-          <div style="background: var(--bg-secondary); padding: 1rem; border-radius: 8px; flex: 1; min-width: 120px; text-align: center;">
+          <div class="insight-box">
             <strong>Best Day</strong>
-            <div id="best-day" style="font-size: 1.5rem; color: var(--success);">—</div>
+            <div id="best-day">—</div>
           </div>
-          <div style="background: var(--bg-secondary); padding: 1rem; border-radius: 8px; flex: 1; min-width: 120px; text-align: center;">
+          <div class="insight-box">
             <strong>Sessions</strong>
-            <div id="session-count" style="font-size: 1.5rem; color: var(--accent);">0</div>
+            <div id="session-count">0</div>
           </div>
-          <div style="background: var(--bg-secondary); padding: 1rem; border-radius: 8px; flex: 1; min-width: 120px; text-align: center;">
-            <strong>Target Achieved</strong>
-            <div id="target-achieved" style="font-size: 1.5rem; color: var(--warning);">No</div>
+          <div class="insight-box">
+            <strong>Target Achieved?</strong>
+            <div id="target-achieved">No</div>
           </div>
         </div>
 
-        <div class="chart-container">
-          <canvas id="weeklyChart"></canvas>
-        </div>
+        <div class="chart-container"><canvas id="barChart"></canvas></div>
+        <div class="chart-container"><canvas id="sparklineChart"></canvas></div>
+
+        <h2 style="margin-top:1.2rem;font-size:1.1rem;">Previous Weeks</h2>
+        <div id="previous-weeks-container"></div>
       </section>
-    </main>
+
+    </main> 
   </div>
 
-  <!-- Notification Container -->
-  <div id="notification" class="notification"></div>
 
   <script>
-    // ——————————————————————————————————————————————————————————————————————————————————
-    // UTILITY FUNCTIONS
-    // ——————————————————————————————————————————————————————————————————————————————————
-    
-    function todayISO() {
-      const now = new Date();
-      now.setMinutes(now.getMinutes() - now.getTimezoneOffset());
-      return now.toISOString().split("T")[0];
-    }
+// ——————————————
+// Utility: get local “YYYY-MM-DD” string
+function todayISO() {
+  const now = new Date();
+  now.setMinutes(now.getMinutes() - now.getTimezoneOffset());
+  return now.toISOString().split("T")[0];
+}
 
-    function parseLocalDate(s) {
-      const [y, m, d] = s.split("-").map(Number);
-      return new Date(y, m - 1, d);
-    }
+// ——————————————
+// Storage & State
+const STORAGE_KEY = "studyChallengeData";
+const TARGETS_KEY = "weeklyTargets";
+let weekOffset = 0;
 
-    function formatDate(d) {
-      return d.getFullYear() + "-" + 
-        String(d.getMonth() + 1).padStart(2, "0") + "-" + 
-        String(d.getDate()).padStart(2, "0");
-    }
+// ——————————————
+// Helpers
+function parseLocalDate(s) {
+  const [y, m, d] = s.split("-").map(Number);
+  return new Date(y, m - 1, d);
+}
+function formatDate(d) {
+  return d.getFullYear() + "-" + 
+    String(d.getMonth() + 1).padStart(2, "0") + "-" + 
+    String(d.getDate()).padStart(2, "0");
+}
+function getEntries() {
+  return JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
+}
+function saveEntries(arr) {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(arr));
+}
+function getWeeklyTargets() {
+  return JSON.parse(localStorage.getItem(TARGETS_KEY) || "{}");
+}
+function saveWeeklyTargets(map) {
+  localStorage.setItem(TARGETS_KEY, JSON.stringify(map));
+}
+function getWeekRange(offset = 0) {
+  const now = new Date();
+  const day = now.getDay() || 7;
+  const mon = new Date(now);
+  mon.setDate(now.getDate() - day + 1 + offset * 7);
+  mon.setHours(0, 0, 0, 0);
+  const sun = new Date(mon);
+  sun.setDate(mon.getDate() + 6);
+  sun.setHours(23, 59, 59, 999);
+  return { monday: mon, sunday: sun };
+}
+function getWeeklyData(offset = 0) {
+  const { monday, sunday } = getWeekRange(offset);
+  return getEntries().filter(e => {
+    const d = parseLocalDate(e.date);
+    return d >= monday && d <= sunday;
+  });
+}
+function getWeeklyTarget(offset = 0) {
+  const map = getWeeklyTargets();
+  const key = formatDate(getWeekRange(offset).monday);
+  const rec = map[key];
+  if (rec && typeof rec === "object") return rec.target;
+  return rec || 70;
+}
+function setWeeklyTarget(val) {
+  const map = getWeeklyTargets();
+  const key = formatDate(getWeekRange(0).monday);
+  let rec = map[key];
+  if (!rec || typeof rec !== "object") rec = { target: rec || 70, changes: 0 };
+  rec.target = val;
+  rec.changes = (rec.changes || 0) + 1;
+  map[key] = rec;
+  saveWeeklyTargets(map);
+}
+function canChangeTarget() {
+  const map = getWeeklyTargets();
+  const key = formatDate(getWeekRange(0).monday);
+  const rec = map[key];
+  return !(rec && rec.changes >= 3);
+}
+function targetChangeCount() {
+  const map = getWeeklyTargets();
+  const key = formatDate(getWeekRange(0).monday);
+  const rec = map[key];
+  return rec && rec.changes ? rec.changes : 0;
+}
+// ——————————————
+// Weekly Progress Card
+function updateWeeklyCard() {
+  const { monday, sunday } = getWeekRange(0);
+  document.getElementById("week-range").textContent =
+    `Week: ${formatDate(monday)} to ${formatDate(sunday)}`;
 
-    function showNotification(message, type = 'info') {
-      const notification = document.getElementById('notification');
-      notification.innerHTML = `
-        <div style="display: flex; align-items: center; gap: 0.5rem;">
-          <i class="fas fa-${type === 'success' ? 'check-circle' : type === 'error' ? 'exclamation-triangle' : 'info-circle'}"></i>
-          <span>${message}</span>
-        </div>
+  // total hours this week
+  const total = getWeeklyData(0).reduce((s, e) =>
+    s + e.hours + (e.minutes || 0) / 60, 0
+  );
+
+  // progress bar
+  const target = getWeeklyTarget(0);
+  const pct = Math.min((total / target) * 100, 100);
+  document.getElementById("progress-bar-fill").style.width = pct + "%";
+  document.getElementById("progress-bar-text").textContent =
+    `${total.toFixed(1)} hrs / ${target} hrs`;
+
+  // countdown timer
+  const now = new Date();
+  let diff = Math.max(sunday - now, 0);
+  const d = Math.floor(diff / 864e5),
+        h = Math.floor((diff % 864e5) / 36e5),
+        m = Math.floor((diff % 36e5) / 6e4),
+        s = Math.floor((diff % 6e4) / 1e3);
+  document.getElementById("countdown-timer").textContent =
+    `Time left: ${d}d ${h}h ${m}m ${s}s`;
+
+  // daily‑avg needed for rest of week
+  const hoursLeft = Math.max((sunday - now) / 36e5, 0);
+  const daysLeft = Math.ceil(hoursLeft / 24);
+  const remaining = Math.max(target - total, 0);
+  const dailyAvg = daysLeft > 0 ? (remaining / daysLeft).toFixed(1) : 0;
+
+  // motivation + daily‑avg display
+  const msgEl = document.getElementById("motivation-message");
+  msgEl.innerHTML = `
+    <div class="daily-avg-message">
+      ${dailyAvg > 0 
+         ? `📅 Daily target: ${dailyAvg} hrs/day` 
+         : '🎉 Great work this week!'}
+    </div>
+    <div class="status-message">
+      ${now > sunday
+         ? (total >= target 
+             ? '🎉 Success! You met your target!' 
+             : '😕 Not quite there. Keep pushing!')
+         : '🎯 Keep it up! You got this!'}
+    </div>
+  `;
+
+  // — only fire confetti once per week —
+  const weekKey     = formatDate(monday);              // e.g. "2025-05-04"
+  const firedKey    = `confettiFired_${weekKey}`;      // unique per week
+  if (total >= target && now <= sunday && !localStorage.getItem(firedKey)) {
+    confetti();
+    localStorage.setItem(firedKey, "1");
+  }
+
+  // Target input
+  const input = document.getElementById("target-hours");
+  const btn = document.getElementById("target-btn");
+  const info = document.getElementById("discipline-message");
+  const changes = targetChangeCount();
+
+  if (document.activeElement !== input) input.value = target;
+  if (changes >= 3) {
+    input.disabled = true;
+    btn.disabled = true;
+    info.textContent = `🔒 Target changed ${changes}/3 — locked for this week.`;
+  } else {
+    input.disabled = false;
+    btn.disabled = false;
+    info.textContent = `Target changes used: ${changes}/3`;
+  }
+}
+
+// ——————————————
+// Sessions Table
+function renderEntriesTable() {
+  const tbody = document.querySelector("#entries-table tbody");
+  tbody.innerHTML = "";
+
+  getEntries()
+    .sort((a, b) => parseLocalDate(b.date) - parseLocalDate(a.date))
+    .forEach((e) => {
+      const tr = document.createElement("tr");
+      tr.innerHTML = `
+        <td>${e.date}</td>
+        <td>${e.hours}h ${e.minutes || 0}m</td>
+        <td><span class="delete-btn">🗑️</span></td>
       `;
-      notification.style.background = type === 'success' ? 'var(--success)' : type === 'error' ? 'var(--danger)' : 'var(--primary)';
-      notification.classList.add('show');
-      
-      setTimeout(() => {
-        notification.classList.remove('show');
-      }, 3000);
+
+      tr.querySelector(".delete-btn").onclick = () => {
+        if (!confirm("Are you sure you want to delete this session?")) return;
+        // Filter out the entry *by its date* (and minutes/hours if you prefer)
+        const updated = getEntries().filter(x => x.date !== e.date);
+        saveEntries(updated);
+        refreshAll();
+      };
+
+      tbody.appendChild(tr);
+    });
+}
+
+// ——————————————
+// Dashboard
+let barChart, sparkChart;
+function updateDashboard() {
+  const { monday, sunday } = getWeekRange(weekOffset);
+  document.getElementById("dashboard-week-label").textContent = 
+    `Week: ${formatDate(monday)} to ${formatDate(sunday)}`;
+
+  const days = [...Array(7)].map((_, i) => {
+    const d = new Date(monday);
+    d.setDate(d.getDate() + i);
+    return formatDate(d);
+  });
+  const data = days.map(day =>
+    getEntries().reduce((s, e) => 
+      s + ((e.date === day) ? e.hours + (e.minutes || 0) / 60 : 0), 0
+    )
+  );
+
+  // ——————————————
+// Insights
+const total = data.reduce((a, b) => a + b, 0);
+
+// determine how many days to average over
+let daysCount;
+if (weekOffset === 0) {
+  // in the current week: days passed so far (Monday=1 … Sunday=7)
+  const today = new Date();
+  const dayIdx = today.getDay() || 7; // Sunday→7
+  daysCount = dayIdx;
+} else {
+  // full week for past weeks
+  daysCount = 7;
+}
+
+document.getElementById("avg-hours").textContent =
+  (total / daysCount).toFixed(1);
+
+document.getElementById("session-count").textContent =
+  data.filter(v => v > 0).length;
+
+document.getElementById("target-achieved").textContent =
+  weekOffset === 0
+    ? (total >= getWeeklyTarget(0) ? "Yes" : "No")
+    : "—";
+
+let bestDay = "—", bestVal = 0;
+days.forEach((d, idx) => {
+  if (data[idx] > bestVal) {
+    bestVal = data[idx];
+    bestDay = d;
+  }
+});
+document.getElementById("best-day").textContent =
+  bestDay === "—"
+    ? "—"
+    : `${bestDay} (${bestVal.toFixed(1)}h)`;
+
+  // Bar chart
+  if (barChart) barChart.destroy();
+  barChart = new Chart(
+    document.getElementById("barChart"),
+    {
+      type: "bar",
+      data: { 
+        labels: days, 
+        datasets: [{ 
+          label: "Hours", 
+          data, 
+          backgroundColor: getComputedStyle(document.documentElement)
+            .getPropertyValue("--primary-color").trim() 
+        }] 
+      },
+      options: { 
+        scales: { y: { beginAtZero: true } }, 
+        responsive: true 
+      }
     }
+  );
 
-    // ——————————————————————————————————————————————————————————————————————————————————
-    // STORAGE & STATE
-    // ——————————————————————————————————————————————————————————————————————————————————
-    
-    const STORAGE_KEY = "studyChallengeData";
-    const TARGETS_KEY = "weeklyTargets";
-    const TASKS_KEY = "studyTasks";
-    const GOALS_KEY = "dailyGoals";
-    const STREAK_KEY = "studyStreak";
-    
-    let weekOffset = 0;
-    let pomodoroTimer = null;
-    let pomodoroTime = 25 * 60; // 25 minutes in seconds
-    let pomodoroRunning = false;
-    let currentMode = 'work';
-    let pomodoroSession = 1;
-
-    // ——————————————————————————————————————————————————————————————————————————————————
-    // DATA MANAGEMENT
-    // ——————————————————————————————————————————————————————————————————————————————————
-    
-    function getEntries() {
-      return JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
-    }
-
-    function saveEntries(arr) {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(arr));
-    }
-
-    function getTasks() {
-      return JSON.parse(localStorage.getItem(TASKS_KEY) || "[]");
-    }
-
-    function saveTasks(tasks) {
-      localStorage.setItem(TASKS_KEY, JSON.stringify(tasks));
-    }
-
-    function getDailyGoal() {
-      const goals = JSON.parse(localStorage.getItem(GOALS_KEY) || "{}");
-      return goals[todayISO()] || 2;
-    }
-
-    function setDailyGoal(hours) {
-      const goals = JSON.parse(localStorage.getItem(GOALS_KEY) || "{}");
-      goals[todayISO()] = hours;
-      localStorage.setItem(GOALS_KEY, JSON.stringify(goals));
-    }
-
-    function getStreak() {
-      return JSON.parse(localStorage.getItem(STREAK_KEY) || '{"current": 0, "longest": 0, "lastStudyDate": null}');
-    }
-
-    function updateStreak() {
-      const streak = getStreak();
-      const today = todayISO();
-      const todayEntries = getEntries().filter(e => e.date === today);
-      
-      if (todayEntries.length > 0) {
-        if (streak.lastStudyDate !== today) {
-          const yesterday = new Date();
-          yesterday.setDate(yesterday.getDate() - 1);
-          const yesterdayStr = formatDate(yesterday);
-          
-          if (streak.lastStudyDate === yesterdayStr) {
-            streak.current += 1;
-          } else {
-            streak.current = 1;
-          }
-          
-          streak.lastStudyDate = today;
-          if (streak.current > streak.longest) {
-            streak.longest = streak.current;
-          }
-          
-          localStorage.setItem(STREAK_KEY, JSON.stringify(streak));
+  // Sparkline chart
+  if (sparkChart) sparkChart.destroy();
+  sparkChart = new Chart(
+    document.getElementById("sparklineChart"),
+    {
+      type: "line",
+      data: { 
+        labels: days, 
+        datasets: [{
+          data,
+          fill: true,
+          tension: 0.4,
+          borderColor: '#8b5cf6',
+          backgroundColor: 'rgba(139, 92, 246, 0.2)',
+          borderWidth: 2,
+          pointRadius: 4,
+          pointBackgroundColor: '#8b5cf6',
+          pointHoverRadius: 6
+        }]
+      },
+      options: { 
+        plugins: { legend: { display: false } }, 
+        scales: { x: { display: false }, y: { display: false } }, 
+        responsive: true,
+        interaction: {
+          mode: 'nearest',
+          intersect: false
         }
       }
-      
-      return streak;
     }
+  );
 
-    function getWeekRange(offset = 0) {
-      const now = new Date();
-      const day = now.getDay() || 7;
-      const mon = new Date(now);
-      mon.setDate(now.getDate() - day + 1 + offset * 7);
-      mon.setHours(0, 0, 0, 0);
+  document.getElementById("next-week").disabled = (weekOffset === 0);
+}
+
+// ——————————————
+// Previous Weeks
+function renderPreviousWeeks() {
+  const cont = document.getElementById("previous-weeks-container");
+  cont.innerHTML = '<div class="previous-weeks-scroll"></div>';
+  const scrollCont = cont.querySelector('.previous-weeks-scroll');
+
+  const groups = {};
+  getEntries().forEach(e => {
+    const d = parseLocalDate(e.date), day = d.getDay() || 7;
+    const mon = new Date(d);
+    mon.setDate(d.getDate() - (day - 1));
+    const key = formatDate(mon);
+    (groups[key] || (groups[key] = [])).push(e);
+  });
+
+  const { monday: curMon } = getWeekRange(0);
+  Object.keys(groups).sort().reverse().forEach(ws => {
+    const mon = parseLocalDate(ws);
+    if (mon < curMon) {
+      const hrs = groups[ws].reduce((s, e) => s + e.hours + (e.minutes || 0)/60, 0);
       const sun = new Date(mon);
       sun.setDate(mon.getDate() + 6);
-      sun.setHours(23, 59, 59, 999);
-      return { monday: mon, sunday: sun };
+      const card = document.createElement("div");
+      card.className = "previous-week-card";
+      card.innerHTML = `
+        <h3>Week: ${ws} to ${formatDate(sun)}</h3>
+        <p>Total: ${hrs.toFixed(1)} hrs</p>
+      `;
+      scrollCont.appendChild(card);
     }
+  });
+}
 
-    function getWeeklyData(offset = 0) {
-      const { monday, sunday } = getWeekRange(offset);
-      return getEntries().filter(e => {
-        const d = parseLocalDate(e.date);
-        return d >= monday && d <= sunday;
-      });
+// ——————————————
+// Refresh All
+function refreshAll() {
+  updateWeeklyCard();
+  renderEntriesTable();
+  updateDashboard();
+  renderPreviousWeeks();
+}
+
+// ——————————————
+// Event Listeners
+document.getElementById("study-form").addEventListener("submit", e => {
+  e.preventDefault();
+  const date = document.getElementById("study-date").value;
+  const hrs = Number(document.getElementById("hours").value);
+  const mins = Number(document.getElementById("minutes").value) || 0;
+  if (!date) return alert("Please select a date.");
+  
+  const arr = getEntries();
+  const ex = arr.find(x => x.date === date);
+  if (ex) {
+    ex.hours += hrs;
+    ex.minutes = (ex.minutes || 0) + mins;
+    if (ex.minutes >= 60) {
+      ex.hours += Math.floor(ex.minutes / 60);
+      ex.minutes %= 60;
     }
+  } else {
+    arr.push({ date, hours: hrs, minutes: mins });
+  }
+  saveEntries(arr);
+  e.target.reset();
+  document.getElementById("study-date").value = todayISO();
+  refreshAll();
+});
 
-    function getWeeklyTarget(offset = 0) {
-      const map = JSON.parse(localStorage.getItem(TARGETS_KEY) || "{}");
-      const key = formatDate(getWeekRange(offset).monday);
-      const rec = map[key];
-      if (rec && typeof rec === "object") return rec.target;
-      return rec || 70;
+document.getElementById("target-form").addEventListener("submit", e => {
+  e.preventDefault();
+  if (!canChangeTarget()) return;
+  const t = Number(document.getElementById("target-hours").value);
+  if (t < 1) return alert("Target must be at least 1 hour.");
+  setWeeklyTarget(t);
+  updateWeeklyCard();
+});
+
+document.getElementById("prev-week").addEventListener("click", () => {
+  weekOffset--;
+  refreshAll();
+});
+document.getElementById("next-week").addEventListener("click", () => {
+  if (weekOffset < 0) weekOffset++;
+  refreshAll();
+});
+
+// ——————————————
+// Auto-update date
+(function autoRolloverDate(){
+  const dateInput = document.getElementById("study-date");
+  setInterval(() => {
+    if (dateInput.value !== todayISO()) {
+      dateInput.value = todayISO();
     }
+  }, 60 * 1000);
+})();
 
-    // ——————————————————————————————————————————————————————————————————————————————————
-    // POMODORO TIMER (NEW FEATURE 1)
-    // ——————————————————————————————————————————————————————————————————————————————————
     
-    function updatePomodoroDisplay() {
-      const minutes = Math.floor(pomodoroTime / 60);
-      const seconds = pomodoroTime % 60;
-      document.getElementById('pomodoro-display').textContent = 
-        `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
-    }
+// ——————————————
+// Init
+document.addEventListener("DOMContentLoaded", () => {
+  document.getElementById("study-date").value = todayISO();
+  refreshAll();
+  setInterval(updateWeeklyCard, 1000);
+});
 
-    function startPomodoro() {
-      if (pomodoroRunning) return;
-      
-      pomodoroRunning = true;
-      pomodoroTimer = setInterval(() => {
-        pomodoroTime--;
-        updatePomodoroDisplay();
-        
-        if (pomodoroTime <= 0) {
-          clearInterval(pomodoroTimer);
-          pomodoroRunning = false;
-          
-          // Play notification sound (if available)
-          showNotification(`${currentMode === 'work' ? 'Work' : 'Break'} session completed!`, 'success');
-          
-          // Auto-switch modes
-          if (currentMode === 'work') {
-            pomodoroSession++;
-            currentMode = pomodoroSession % 4 === 0 ? 'long' : 'short';
-            pomodoroTime = (currentMode === 'long' ? 15 : 5) * 60;
-          } else {
-            currentMode = 'work';
-            pomodoroTime = 25 * 60;
-          }
-          
-          updatePomodoroDisplay();
-          updatePomodoroSession();
-          
-          // Automatically log work sessions
-          if (currentMode !== 'work') {
-            const entries = getEntries();
-            const today = todayISO();
-            const existing = entries.find(e => e.date === today);
-            
-            if (existing) {
-              existing.hours += 0.42; // ~25 minutes
-            } else {
-              entries.push({
-                date: today,
-                hours: 0.42,
-                minutes: 0,
-                subject: 'Pomodoro Session'
-              });
-            }
-            
-            saveEntries(entries);
-            refreshAll();
-          }
-        }
-      }, 1000);
-    }
 
-    function pausePomodoro() {
-      clearInterval(pomodoroTimer);
-      pomodoroRunning = false;
-    }
 
-    function resetPomodoro() {
-      clearInterval(pomodoroTimer);
-      pomodoroRunning = false;
-      
-      const modeDurations = { work: 25, short: 5, long: 15 };
-      pomodoroTime = modeDurations[currentMode] * 60;
-      updatePomodoroDisplay();
-    }
 
-    function updatePomodoroSession() {
-      document.getElementById('pomodoro-session').textContent = pomodoroSession;
-      document.getElementById('current-mode').textContent = 
-        currentMode === 'work' ? 'Work' : currentMode === 'short' ? 'Short Break' : 'Long Break';
-    }
-
-    // ——————————————————————————————————————————————————————————————————————————————————
-    // DAILY GOALS (NEW FEATURE 2)
-    // ——————————————————————————————————————————————————————————————————————————————————
-    
-    function updateDailyProgress() {
-      const goal = getDailyGoal();
-      const today = todayISO();
-      const todayTotal = getEntries()
-        .filter(e => e.date === today)
-        .reduce((sum, e) => sum + e.hours + (e.minutes || 0) / 60, 0);
-      
-      const percentage = Math.min((todayTotal / goal) * 100, 100);
-      
-      document.getElementById('daily-progress-fill').style.width = percentage + '%';
-      document.getElementById('daily-progress-text').textContent = 
-        `${todayTotal.toFixed(1)} hrs / ${goal} hrs today`;
-      
-      if (todayTotal >= goal) {
-        showNotification('Daily goal achieved! 🎉', 'success');
-      }
-    }
-
-    function setQuickGoal(hours) {
-      document.getElementById('daily-goal').value = hours;
-      setDailyGoal(hours);
-      updateDailyProgress();
-      showNotification(`Daily goal set to ${hours} hours`, 'success');
-    }
-
-    // ——————————————————————————————————————————————————————————————————————————————————
-    // TASK MANAGER (NEW FEATURE 3)
-    // ——————————————————————————————————————————————————————————————————————————————————
-    
-    function addTask() {
-      const input = document.getElementById('task-input');
-      const taskText = input.value.trim();
-      
-      if (!taskText) return;
-      
-      const tasks = getTasks();
-      tasks.push({
-        id: Date.now(),
-        text: taskText,
-        completed: false,
-        date: todayISO()
-      });
-      
-      saveTasks(tasks);
-      input.value = '';
-      renderTasks();
-      showNotification('Task added successfully!', 'success');
-    }
-
-    function toggleTask(id) {
-      const tasks = getTasks();
-      const task = tasks.find(t => t.id === id);
-      if (task) {
-        task.completed = !task.completed;
-        saveTasks(tasks);
-        renderTasks();
-        
-        if (task.completed) {
-          showNotification('Task completed! 🎉', 'success');
-        }
-      }
-    }
-
-    function deleteTask(id) {
-      const tasks = getTasks().filter(t => t.id !== id);
-      saveTasks(tasks);
-      renderTasks();
-      showNotification('Task deleted', 'info');
-    }
-
-    function renderTasks() {
-      const taskList = document.getElementById('task-list');
-      const tasks = getTasks().filter(t => t.date === todayISO());
-      
-      taskList.innerHTML = tasks.map(task => `
-        <div class="task-item ${task.completed ? 'completed' : ''}">
-          <input type="checkbox" ${task.completed ? 'checked' : ''} onchange="toggleTask(${task.id})">
-          <span style="flex: 1;">${task.text}</span>
-          <button onclick="deleteTask(${task.id})" style="background: var(--danger); padding: 0.25rem 0.5rem; font-size: 0.8rem;">
-            <i class="fas fa-trash"></i>
-          </button>
-        </div>
-      `).join('');
-      
-      const completed = tasks.filter(t => t.completed).length;
-      document.getElementById('completed-tasks').textContent = completed;
-      document.getElementById('total-tasks').textContent = tasks.length;
-    }
-
-    // ——————————————————————————————————————————————————————————————————————————————————
-    // SUBJECT TRACKER (NEW FEATURE 4)
-    // ——————————————————————————————————————————————————————————————————————————————————
-    
-    let subjectChart = null;
-
-    function updateSubjectChart() {
-      const ctx = document.getElementById('subjectChart').getContext('2d');
-      const entries = getEntries();
-      
-      const subjectData = {};
-      entries.forEach(entry => {
-        const subject = entry.subject || 'Other';
-        const hours = entry.hours + (entry.minutes || 0) / 60;
-        subjectData[subject] = (subjectData[subject] || 0) + hours;
-      });
-      
-      const subjects = Object.keys(subjectData);
-      const hours = Object.values(subjectData);
-      
-      if (subjectChart) {
-        subjectChart.destroy();
-      }
-      
-      subjectChart = new Chart(ctx, {
-        type: 'doughnut',
-        data: {
-          labels: subjects,
-          datasets: [{
-            data: hours,
-            backgroundColor: [
-              '#6366f1', '#8b5cf6', '#10b981', '#f59e0b', '#ef4444', '#06b6d4'
-            ]
-          }]
-        },
-        options: {
-          responsive: true,
-          maintainAspectRatio: false,
-          plugins: {
-            legend: {
-              position: 'bottom',
-              labels: {
-                color: '#ffffff'
-              }
-            }
-          }
-        }
-      });
-    }
-
-    // ——————————————————————————————————————————————————————————————————————————————————
-    // STUDY STREAK (NEW FEATURE 5)
-    // ——————————————————————————————————————————————————————————————————————————————————
-    
-    function updateStreak() {
-      const streak = getStreak();
-      const today = todayISO();
-      const todayEntries = getEntries().filter(e => e.date === today);
-      
-      if (todayEntries.length > 0) {
-        if (streak.lastStudyDate !== today) {
-          const yesterday = new Date();
-          yesterday.setDate(yesterday.getDate() - 1);
-          const yesterdayStr = formatDate(yesterday);
-          
-          if (streak.lastStudyDate === yesterdayStr) {
-            streak.current += 1;
-          } else {
-            streak.current = 1;
-          }
-          
-          streak.lastStudyDate = today;
-          if (streak.current > streak.longest) {
-            streak.longest = streak.current;
-          }
-          
-          localStorage.setItem(STREAK_KEY, JSON.stringify(streak));
-        }
-      }
-      
-      return streak;
-    }
-
-    function renderStreak() {
-      const streak = updateStreak();
-      document.getElementById('streak-count').textContent = `${streak.current} Days`;
-      document.getElementById('longest-streak').textContent = streak.longest;
-      
-      // Calculate week streak
-      const { monday } = getWeekRange(0);
-      let weekStreak = 0;
-      for (let i = 0; i < 7; i++) {
-        const day = new Date(monday);
-        day.setDate(monday.getDate() + i);
-        const dayStr = formatDate(day);
-        const dayEntries = getEntries().filter(e => e.date === dayStr);
-        if (dayEntries.length > 0) weekStreak++;
-      }
-      
-      document.getElementById('week-streak').textContent = weekStreak;
-      
-      // Render mini calendar
-      renderStreakCalendar();
-    }
-
-    function renderStreakCalendar() {
-      const calendar = document.getElementById('streak-calendar');
-      const { monday } = getWeekRange(0);
-      
-      let calendarHTML = '<div style="display: grid; grid-template-columns: repeat(7, 1fr); gap: 0.25rem; margin-top: 0.5rem;">';
-      
-      const days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
-      days.forEach(day => {
-        calendarHTML += `<div style="text-align: center; font-size: 0.7rem; color: var(--text-secondary);">${day}</div>`;
-      });
-      
-      for (let i = 0; i < 7; i++) {
-        const day = new Date(monday);
-        day.setDate(monday.getDate() + i);
-        const dayStr = formatDate(day);
-        const dayEntries = getEntries().filter(e => e.date === dayStr);
-        const hasStudied = dayEntries.length > 0;
-        
-        calendarHTML += `
-          <div style="
-            width: 20px; 
-            height: 20px; 
-            border-radius: 4px; 
-            background: ${hasStudied ? 'var(--success)' : 'var(--bg-secondary)'}; 
-            margin: 0 auto;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 0.7rem;
-          ">
-            ${hasStudied ? '✓' : ''}
-          </div>
-        `;
-      }
-      
-      calendarHTML += '</div>';
-      calendar.innerHTML = calendarHTML;
-    }
-
-    // ——————————————————————————————————————————————————————————————————————————————————
-    // EXISTING FUNCTIONALITY (Updated)
-    // ——————————————————————————————————————————————————————————————————————————————————
-    
-    function updateWeeklyCard() {
-      const { monday, sunday } = getWeekRange(0);
-      document.getElementById("week-range").textContent =
-        `Week: ${formatDate(monday)} to ${formatDate(sunday)}`;
-
-      const total = getWeeklyData(0).reduce((s, e) =>
-        s + e.hours + (e.minutes || 0) / 60, 0
-      );
-
-      const target = getWeeklyTarget(0);
-      const pct = Math.min((total / target) * 100, 100);
-      document.getElementById("progress-bar-fill").style.width = pct + "%";
-      document.getElementById("progress-text").textContent =
-        `${total.toFixed(1)} hrs / ${target} hrs`;
-
-      // Countdown timer
-      const now = new Date();
-      let diff = Math.max(sunday - now, 0);
-      const d = Math.floor(diff / 864e5),
-            h = Math.floor((diff % 864e5) / 36e5),
-            m = Math.floor((diff % 36e5) / 6e4),
-            s = Math.floor((diff % 6e4) / 1e3);
-      document.getElementById("countdown-timer").textContent =
-        `Time left: ${d}d ${h}h ${m}m ${s}s`;
-
-      // Motivation message
-      const msgEl = document.getElementById("motivation-message");
-      if (total >= target && now <= sunday) {
-        msgEl.innerHTML = '<div style="color: var(--success);"><i class="fas fa-trophy"></i> Congratulations! Goal achieved!</div>';
-        
-        // Confetti effect
-        const weekKey = formatDate(monday);
-        const firedKey = `confettiFired_${weekKey}`;
-        if (!localStorage.getItem(firedKey)) {
-          confetti({
-            particleCount: 100,
-            spread: 70,
-            origin: { y: 0.6 }
-          });
-          localStorage.setItem(firedKey, "1");
-        }
-      } else if (now > sunday) {
-        msgEl.innerHTML = total >= target 
-          ? '<div style="color: var(--success);"><i class="fas fa-check"></i> Week completed successfully!</div>'
-          : '<div style="color: var(--warning);"><i class="fas fa-exclamation-triangle"></i> Week ended - try harder next time!</div>';
-      } else {
-        const remaining = Math.max(target - total, 0);
-        const daysLeft = Math.ceil(diff / 864e5);
-        const dailyNeeded = daysLeft > 0 ? (remaining / daysLeft).toFixed(1) : 0;
-        msgEl.innerHTML = `<div style="color: var(--accent);"><i class="fas fa-target"></i> Need ${dailyNeeded} hrs/day to reach goal</div>`;
-      }
-    }
-
-    function renderEntriesTable() {
-      const tbody = document.querySelector("#entries-table tbody");
-      tbody.innerHTML = "";
-
-      getEntries()
-        .sort((a, b) => parseLocalDate(b.date) - parseLocalDate(a.date))
-        .slice(0, 50) // Show only last 50 entries
-        .forEach((e, index) => {
-          const tr = document.createElement("tr");
-          tr.style.animation = `fadeInUp 0.3s ease ${index * 0.1}s both`;
-          tr.innerHTML = `
-            <td style="padding: 0.75rem; border-bottom: 1px solid var(--glass-border);">${e.date}</td>
-            <td style="padding: 0.75rem; border-bottom: 1px solid var(--glass-border);">${e.subject || 'Other'}</td>
-            <td style="padding: 0.75rem; border-bottom: 1px solid var(--glass-border);">${e.hours}h ${e.minutes || 0}m</td>
-            <td style="padding: 0.75rem; border-bottom: 1px solid var(--glass-border);">
-              <button onclick="deleteEntry('${e.date}')" style="background: var(--danger); padding: 0.25rem 0.5rem; font-size: 0.8rem;">
-                <i class="fas fa-trash"></i>
-              </button>
-            </td>
-          `;
-          tbody.appendChild(tr);
-        });
-    }
-
-    function deleteEntry(date) {
-      if (!confirm("Are you sure you want to delete this session?")) return;
-      
-      const updated = getEntries().filter(x => x.date !== date);
-      saveEntries(updated);
-      refreshAll();
-      showNotification('Session deleted', 'info');
-    }
-
-    let weeklyChart = null;
-
-    function updateDashboard() {
-      const { monday, sunday } = getWeekRange(weekOffset);
-      document.getElementById("dashboard-week-label").textContent = 
-        `Week: ${formatDate(monday)} to ${formatDate(sunday)}`;
-
-      const days = [...Array(7)].map((_, i) => {
-        const d = new Date(monday);
-        d.setDate(d.getDate() + i);
-        return formatDate(d);
-      });
-      
-      const data = days.map(day =>
-        getEntries().reduce((s, e) => 
-          s + ((e.date === day) ? e.hours + (e.minutes || 0) / 60 : 0), 0
-        )
-      );
-
-      // Update insights
-      const total = data.reduce((a, b) => a + b, 0);
-      let daysCount = weekOffset === 0 ? (new Date().getDay() || 7) : 7;
-      
-      document.getElementById("avg-hours").textContent = (total / daysCount).toFixed(1);
-      document.getElementById("session-count").textContent = data.filter(v => v > 0).length;
-      document.getElementById("target-achieved").textContent = 
-        weekOffset === 0 ? (total >= getWeeklyTarget(0) ? "Yes" : "No") : "—";
-
-      let bestDay = "—", bestVal = 0;
-      days.forEach((d, idx) => {
-        if (data[idx] > bestVal) {
-          bestVal = data[idx];
-          bestDay = d;
-        }
-      });
-      document.getElementById("best-day").textContent = 
-        bestDay === "—" ? "—" : `${bestDay} (${bestVal.toFixed(1)}h)`;
-
-      // Update chart
-      const ctx = document.getElementById('weeklyChart').getContext('2d');
-      
-      if (weeklyChart) {
-        weeklyChart.destroy();
-      }
-      
-      weeklyChart = new Chart(ctx, {
-        type: 'line',
-        data: {
-          labels: days.map(d => new Date(d).toLocaleDateString('en', { weekday: 'short' })),
-          datasets: [{
-            label: 'Study Hours',
-            data: data,
-            borderColor: '#6366f1',
-            backgroundColor: 'rgba(99, 102, 241, 0.1)',
-            borderWidth: 3,
-            fill: true,
-            tension: 0.4,
-            pointBackgroundColor: '#6366f1',
-            pointRadius: 6,
-            pointHoverRadius: 8
-          }]
-        },
-        options: {
-          responsive: true,
-          maintainAspectRatio: false,
-          plugins: {
-            legend: {
-              labels: {
-                color: '#ffffff'
-              }
-            }
-          },
-          scales: {
-            x: {
-              ticks: { color: '#94a3b8' },
-              grid: { color: 'rgba(148, 163, 184, 0.2)' }
-            },
-            y: {
-              ticks: { color: '#94a3b8' },
-              grid: { color: 'rgba(148, 163, 184, 0.2)' },
-              beginAtZero: true
-            }
-          }
-        }
-      });
-
-      document.getElementById("next-week").disabled = (weekOffset === 0);
-    }
-
-    function refreshAll() {
-      updateWeeklyCard();
-      updateDailyProgress();
-      renderEntriesTable();
-      updateDashboard();
-      updateSubjectChart();
-      renderStreak();
-      renderTasks();
-    }
-
-    // ——————————————————————————————————————————————————————————————————————————————————
-    // EVENT LISTENERS
-    // ——————————————————————————————————————————————————————————————————————————————————
-    
-    // Study form submission
-    document.getElementById("study-form").addEventListener("submit", e => {
-      e.preventDefault();
-      const date = document.getElementById("study-date").value;
-      const subject = document.getElementById("study-subject").value;
-      const hrs = Number(document.getElementById("hours").value);
-      const mins = Number(document.getElementById("minutes").value) || 0;
-      
-      if (!date) return alert("Please select a date.");
-      
-      const arr = getEntries();
-      arr.push({ date, subject, hours: hrs, minutes: mins });
-      saveEntries(arr);
-      
-      e.target.reset();
-      document.getElementById("study-date").value = todayISO();
-      refreshAll();
-      showNotification('Study session added successfully!', 'success');
-    });
-
-    // Target form submission
-    document.getElementById("target-form").addEventListener("submit", e => {
-      e.preventDefault();
-      const t = Number(document.getElementById("target-hours").value);
-      if (t < 1) return alert("Target must be at least 1 hour.");
-      
-      // Set weekly target logic here
-      refreshAll();
-      showNotification('Weekly target updated!', 'success');
-    });
-
-    // Daily goal input
-    document.getElementById("daily-goal").addEventListener("change", e => {
-      setDailyGoal(Number(e.target.value));
-      updateDailyProgress();
-    });
-
-    // Task input enter key
-    document.getElementById("task-input").addEventListener("keypress", e => {
-      if (e.key === 'Enter') {
-        addTask();
-      }
-    });
-
-    // Pomodoro controls
-    document.getElementById("pomodoro-start").addEventListener("click", startPomodoro);
-    document.getElementById("pomodoro-pause").addEventListener("click", pausePomodoro);
-    document.getElementById("pomodoro-reset").addEventListener("click", resetPomodoro);
-
-    // Pomodoro mode selection
-    document.querySelectorAll('.mode-btn').forEach(btn => {
-      btn.addEventListener('click', () => {
-        if (btn.dataset.mode) {
-          document.querySelectorAll('.mode-btn').forEach(b => b.classList.remove('active'));
-          btn.classList.add('active');
-          
-          currentMode = btn.dataset.mode;
-          pomodoroTime = Number(btn.dataset.duration) * 60;
-          updatePomodoroDisplay();
-          updatePomodoroSession();
-          
-          if (pomodoroRunning) {
-            pausePomodoro();
-          }
-        }
-      });
-    });
-
-    // Week navigation
-    document.getElementById("prev-week").addEventListener("click", () => {
-      weekOffset--;
-      updateDashboard();
-    });
-    
-    document.getElementById("next-week").addEventListener("click", () => {
-      if (weekOffset < 0) weekOffset++;
-      updateDashboard();
-    });
-
-    // ——————————————————————————————————————————————————————————————————————————————————
-    // INITIALIZATION
-    // ——————————————————————————————————————————————————————————————————————————————————
-    
-    document.addEventListener("DOMContentLoaded", () => {
-      document.getElementById("study-date").value = todayISO();
-      document.getElementById("daily-goal").value = getDailyGoal();
-      
-      updatePomodoroDisplay();
-      updatePomodoroSession();
-      refreshAll();
-      
-      // Update countdown every second
-      setInterval(updateWeeklyCard, 1000);
-      
-      // Auto-update date input
-      setInterval(() => {
-        const dateInput = document.getElementById("study-date");
-        if (dateInput.value !== todayISO()) {
-          dateInput.value = todayISO();
-        }
-      }, 60000);
-      
-      // Show welcome message
-      setTimeout(() => {
-        showNotification('Welcome to Study Master Pro! 🎓', 'success');
-      }, 1000);
-    });
-  </script>
+</script>
 </body>
 </html>
